@@ -182,7 +182,7 @@ def predict_syn_scan(raw_csv_path: str, model_path: str = None) -> pd.DataFrame:
     print(f"   Normal traffic:     {total_count - attack_count} ({100*(total_count-attack_count)/total_count:.1f}%)")
     
     if attack_count > 0:
-        print("\n⚠️  SYN SCAN ATTACKS DETECTED!")
+        print("\n SYN SCAN ATTACKS DETECTED!")
         print("\nAttack sources:")
         attacks = result_df[result_df['prediction'] == 1]
         for _, row in attacks.head(10).iterrows():
@@ -218,22 +218,22 @@ def predict_sqli(raw_csv_path: str, model_path: str = None) -> pd.DataFrame:
         model_path = Path(__file__).parent / "models" / "sqli_detector.joblib"
     
     if not Path(model_path).exists():
-        print(f"❌ Model not found: {model_path}")
+        print(f" Model not found: {model_path}")
         print("   Run 'python main_sqli.py' first to train the model.")
         return None
     
-    print(f"✓ Model loaded from {model_path}")
+    print(f" Model loaded from {model_path}")
     
     # Preprocess data
     print("\n[1/3] Extracting HTTP requests...")
     try:
         http_df = preprocess_http_pipeline(raw_csv_path)
     except Exception as e:
-        print(f"❌ Preprocessing failed: {e}")
+        print(f" Preprocessing failed: {e}")
         return None
     
     if len(http_df) == 0:
-        print("❌ No HTTP requests found in data")
+        print(" No HTTP requests found in data")
         return None
     
     print(f"   → {len(http_df)} HTTP requests extracted")
@@ -259,7 +259,7 @@ def predict_sqli(raw_csv_path: str, model_path: str = None) -> pd.DataFrame:
     print(f"   Normal requests:     {total_count - attack_count} ({100*(total_count-attack_count)/total_count:.1f}%)")
     
     if attack_count > 0:
-        print("\n⚠️  SQL INJECTION ATTACKS DETECTED!")
+        print("\nSQL INJECTION ATTACKS DETECTED!")
         print("\nSample malicious requests:")
         attacks = result_df[result_df['prediction'] == 1]
         for _, row in attacks.head(5).iterrows():
@@ -313,12 +313,12 @@ def predict_all(raw_csv_path: str, output_dir: str = None) -> dict:
         if 'syn_scan' in results:
             syn_out = output_path / "syn_scan_predictions.csv"
             results['syn_scan'].to_csv(syn_out, index=False)
-            print(f"\n✓ SYN scan results saved to: {syn_out}")
+            print(f"\n SYN scan results saved to: {syn_out}")
         
         if 'sqli' in results:
             sqli_out = output_path / "sqli_predictions.csv"
             results['sqli'].to_csv(sqli_out, index=False)
-            print(f"✓ SQLi results saved to: {sqli_out}")
+            print(f" SQLi results saved to: {sqli_out}")
     
     # Final Summary
     print("\n" + "=" * 60)
@@ -327,12 +327,12 @@ def predict_all(raw_csv_path: str, output_dir: str = None) -> dict:
     
     if 'syn_scan' in results:
         syn_attacks = results['syn_scan']['prediction'].sum()
-        print(f"\n🔍 SYN Scan Detection:")
+        print(f"\n SYN Scan Detection:")
         print(f"   • {syn_attacks} attack(s) detected")
     
     if 'sqli' in results:
         sqli_attacks = results['sqli']['prediction'].sum()
-        print(f"\n🔍 SQL Injection Detection:")
+        print(f"\n SQL Injection Detection:")
         print(f"   • {sqli_attacks} attack(s) detected")
     
     print("\n" + "=" * 60)
@@ -364,7 +364,7 @@ def main():
     
     # Check if file exists
     if not Path(raw_csv_path).exists():
-        print(f"❌ File not found: {raw_csv_path}")
+        print(f" File not found: {raw_csv_path}")
         return
     
     # Run predictions

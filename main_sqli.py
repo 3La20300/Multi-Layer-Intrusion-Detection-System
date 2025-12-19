@@ -56,7 +56,7 @@ def main():
     
     # Check if raw data exists
     if not raw_data_path.exists():
-        print(f"\n❌ ERROR: Raw data file not found!")
+        print(f"\n ERROR: Raw data file not found!")
         print(f"   Expected: {raw_data_path}")
         return None, None
     
@@ -71,7 +71,7 @@ def main():
     http_df = preprocess_http_pipeline(str(raw_data_path))
     
     if len(http_df) == 0:
-        print("\n❌ No HTTP requests found in the data!")
+        print("\n No HTTP requests found in the data!")
         return None, None
     
     # ===========================================
@@ -128,12 +128,12 @@ def main():
     print("\n" + "=" * 60)
     print("   SQL INJECTION DETECTION - SUMMARY")
     print("=" * 60)
-    print(f"\n📊 Data:")
+    print(f"\n Data:")
     print(f"   • HTTP requests analyzed: {len(labeled_df)}")
     print(f"   • Training samples: {len(X_train)}")
     print(f"   • Testing samples: {len(X_test)}")
     
-    print(f"\n📈 Model Performance:")
+    print(f"\n Model Performance:")
     metrics = eval_results['metrics']
     print(f"   • Accuracy:  {metrics['accuracy']:.2%}")
     print(f"   • Precision: {metrics['precision']:.2%}")
@@ -142,7 +142,7 @@ def main():
     if 'roc_auc' in metrics:
         print(f"   • ROC-AUC:   {metrics['roc_auc']:.4f}")
     
-    print(f"\n💾 Saved files:")
+    print(f"\n Saved files:")
     print(f"   • Labeled HTTP data: {processed_path}")
     print(f"   • Trained model: {model_path}")
     print(f"   • Evaluation plots: {reports_path}/")
