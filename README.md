@@ -290,7 +290,6 @@ model:
 - **Precision**: Of predicted attacks, how many are real?
 - **Recall**: Of actual attacks, how many did we detect? ⭐
 - **F1 Score**: Balance of precision and recall
-- **ROC-AUC**: Overall discrimination ability
 
 For security applications, **high recall** is critical (don't miss attacks!).
 

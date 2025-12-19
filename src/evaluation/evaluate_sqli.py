@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.metrics import (
-    accuracy_score, precision_score, recall_score, f1_score,
+    accuracy_score, balanced_accuracy_score, precision_score, recall_score, f1_score,
     roc_auc_score, confusion_matrix, classification_report
 )
 from sklearn.feature_selection import f_classif
@@ -58,11 +58,12 @@ def evaluate_sqli_model(model,
         'accuracy': accuracy_score(y_test, y_pred),
         'precision': precision_score(y_test, y_pred, zero_division=0),
         'recall': recall_score(y_test, y_pred, zero_division=0),
-        'f1': f1_score(y_test, y_pred, zero_division=0)
+        'f1': f1_score(y_test, y_pred, zero_division=0),
+        'balanced_accuracy': balanced_accuracy_score(y_test, y_pred)  
     }
     
-    if y_proba is not None and len(np.unique(y_test)) > 1:
-        metrics['roc_auc'] = roc_auc_score(y_test, y_proba)
+    # if y_proba is not None and len(np.unique(y_test)) > 1:
+    #     metrics['roc_auc'] = roc_auc_score(y_test, y_proba)
     
     # Print metrics
     print("\n" + "=" * 50)
