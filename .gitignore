@@ -112,6 +112,7 @@ logs/
 *.log
 temp/
 *.tmp
+*.md
 
 # Data (raw and possibly large files)
 data/raw/
