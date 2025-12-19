@@ -1,0 +1,82 @@
+# SYN Scan Detector Configuration
+# ================================
+
+# Data paths
+data:
+  raw_path: "data/raw/project_features_raw9.0.csv"
+  processed_path: "data/processed/aggregated_features.csv"
+  model_path: "models/syn_scan_detector.joblib"
+
+# Time-window aggregation settings
+aggregation:
+  # Time window in seconds for grouping packets
+  time_window_seconds: 1
+  
+  # Minimum packets required in a window to be considered
+  min_packets_per_window: 2
+
+# Feature engineering settings
+features:
+  # Columns to use from raw data
+  raw_columns:
+    - "frame.time_epoch"
+    - "frame.time_delta"
+    - "ip.src"
+    - "ip.dst"
+    - "tcp.srcport"
+    - "tcp.dstport"
+    - "tcp.flags.syn"
+    - "tcp.flags.ack"
+    - "tcp.flags.fin"
+    - "tcp.flags.reset"
+    - "tcp.len"
+    - "frame.len"
+
+# Labeling thresholds (heuristic-based)
+labeling:
+  # SYN scan detection thresholds
+  syn_count_threshold: 5      # Min SYN packets to consider attack
+  unique_ports_threshold: 3    # Min unique ports to consider port scan
+  syn_ack_ratio_threshold: 3.0 # SYN/ACK ratio threshold
+  
+  # Use combination rule: (syn_count > threshold AND unique_ports > threshold)
+  use_combination_rule: true
+
+# Model settings
+model:
+  # Model type: "random_forest", "xgboost", "isolation_forest"
+  type: "random_forest"
+  
+  # Random Forest parameters
+  random_forest:
+    n_estimators: 100
+    max_depth: 10
+    min_samples_split: 5
+    min_samples_leaf: 2
+    random_state: 42
+    class_weight: "balanced"
+  
+  # XGBoost parameters
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    random_state: 42
+    scale_pos_weight: 1
+
+# Training settings
+training:
+  test_size: 0.2
+  random_state: 42
+  cross_validation_folds: 5
+
+# Evaluation settings
+evaluation:
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "roc_auc"
+  plot_confusion_matrix: true
+  plot_feature_importance: true
