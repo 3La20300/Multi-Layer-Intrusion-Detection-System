@@ -132,7 +132,7 @@ python predict.py data/raw/new_capture.csv
 For an interactive web dashboard:
 
 ```bash
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
 This will:
