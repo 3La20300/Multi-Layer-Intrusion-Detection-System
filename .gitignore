@@ -82,8 +82,8 @@ ipython_config.py
 Pipfile.lock
 
 # pip-tools
-requirements.txt
-requirements-dev.txt
+# requirements.txt
+# requirements-dev.txt
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
